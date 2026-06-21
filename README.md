@@ -37,7 +37,7 @@ Python 3.14+ | Selenium 4.45 | Pytest 9.1 | Chrome DevTools Protocol | XPath/CSS
 
 ## Descripción detallada
 
-Este repositorio implementa un conjunto de pruebas automatizadas para la aplicación Urban Routes utilizando Python y Selenium WebDriver. El archivo `main.py` contiene tanto el Page Object Model (`UrbanRoutesPage`) como la clase de pruebas `TestUrbanRoutes`.
+Este repositorio implementa un conjunto de pruebas automatizadas para la aplicación Urban Routes utilizando Python y Selenium WebDriver. La implementación está separada en `pages/urban_routes_page.py` (Page Object Model) y las pruebas en `tests/test_urban_routes.py` (clase `TestUrbanRoutes`).
 
 El proyecto cubre escenarios como:
 - ingreso de direcciones de origen y destino
@@ -72,7 +72,7 @@ También incluye un helper para recuperar el código SMS desde los logs de red d
 
 ## Ejecutar las pruebas con Pytest
 
-### Todas las pruebas del archivo principal
+### Ejecutar las pruebas
 ```bash
-pytest -s main.py::TestUrbanRoutes
+pytest -s tests/test_urban_routes.py::TestUrbanRoutes
 ```
