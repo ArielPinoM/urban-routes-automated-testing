@@ -1,78 +1,95 @@
 # Urban Routes Automated Testing
 
-## Descripción breve
+## Overview
 
-Suite pruebas automatizadas flujo completo reserva taxi con validaciones SMS, pago, extras.
+End-to-end (E2E) QA automation suite for the Urban Routes taxi reservation flow.
+The tests cover SMS verification, payment flows, extras selection, and the
+reservation lifecycle to prevent regressions in critical user journeys.
 
-## Objetivo
+## Goal
 
-Garantizar la calidad funcional de la aplicación Urban Routes cubriendo escenarios críticos desde el ingreso de direcciones hasta la reserva de taxi. Automatizar la validación end-to-end para reducir regresiones manuales y mejorar la confiabilidad del proceso de reserva.
+Provide reliable functional validation for Urban Routes by automating core
+user scenarios from entering addresses to completing a taxi reservation.
+This suite aims to reduce manual testing effort and increase confidence in
+release-ready behavior.
 
-## Problemática
+## Motivation
 
-La validación manual del flujo completo de reserva de taxi resulta lenta, repetitiva y propensa a errores humanos. El código de confirmación SMS es dinámico y requiere extracción desde logs de red. La complejidad de múltiples campos, modales y estados dinámicos demanda una arquitectura mantenible y escalable para las pruebas.
+Manual testing of the full reservation flow is slow and error-prone. The SMS
+verification code is generated dynamically and must be extracted from browser
+network logs at runtime. Multiple modals, dynamic states and form validations
+require stable architecture and robust synchronization to keep tests reliable
+and maintainable.
 
-## Aprendizajes clave y logros
+## Key Achievements
 
-Implementación exitosa de Page Object Model para desacoplar selectores de la lógica de pruebas. Dominio de extracción de datos desde logs de performance de Chrome para recuperar códigos SMS dinámicos. Uso efectivo de WebDriverWait para sincronización confiable de elementos dinámicos. Cobertura completa de flujo end-to-end: direcciones, tipos de vehículo, tarifas, confirmación telefónica con SMS, pago con tarjeta, selección de extras y validación de modal de búsqueda de auto. Suite de pruebas funcionales que reproduce comportamientos críticos del usuario.
+- Introduced a Page Object Model to separate selectors from test logic.
+- Implemented extraction of SMS verification codes using Chrome performance
+	logs for deterministic phone verification testing.
+- Used explicit waits (`WebDriverWait`) for reliable synchronization with
+	dynamic UI elements.
+- Covered the complete E2E flow: addresses, vehicle type, tariff selection,
+	phone verification, card payment, extras selection and order search modal.
 
-## Habilidades
+## Skills Demonstrated
 
-**Automatización & QA**
-- Diseño de arquitecturas de test (Page Object Model)
-- Sincronización de elementos dinámicos (WebDriverWait)
-- Inspección de network y extracción de datos en runtime
-- Validación de flujos completos end-to-end
-- Ejecución parametrizada con Pytest
+**Automation & QA**
+- Test architecture using Page Object Model (POM)
+- Robust synchronization with `WebDriverWait`
+- Runtime inspection of network traffic to extract verification tokens
+- End-to-end functional validation with Pytest
 
-**Desarrollo & Análisis**
-- Python avanzado
-- Interacciones complejas con Selenium (ActionChains, Keys)
-- Debugging con Chrome DevTools Protocol
-- Optimización de localizadores (XPath/CSS)
+**Development & Analysis**
+- Advanced Python for test automation
+- Complex Selenium interactions (ActionChains, Keys)
+- Chrome DevTools Protocol usage for network inspection
+- Selector optimization (XPath/CSS)
 
-## Stack tecnológico
+## Tech Stack
 
-Python 3.14+ | Selenium 4.45 | Pytest 9.1 | Chrome DevTools Protocol | XPath/CSS selectors
+Python 3.14+ | Selenium 4.x | Pytest | Chrome DevTools Protocol | XPath/CSS
 
-## Descripción detallada
+## Project Layout
 
-Este repositorio implementa un conjunto de pruebas automatizadas para la aplicación Urban Routes utilizando Python y Selenium WebDriver. La implementación está separada en `pages/urban_routes_page.py` (Page Object Model) y las pruebas en `tests/test_urban_routes.py` (clase `TestUrbanRoutes`).
+- `pages/urban_routes_page.py` — Page Object implementing UI selectors and
+	actions for the Urban Routes app.
+- `tests/test_urban_routes.py` — Test cases ported to Pytest using the POM.
+- `data.py` — Test data (addresses, phone numbers, card numbers, etc.).
 
-El proyecto cubre escenarios como:
-- ingreso de direcciones de origen y destino
-- selección de modo y tipo de transporte
-- elección de tarifa `Comfort`
-- flujo de número de teléfono y verificación por SMS
-- adición de tarjeta de crédito y validación de datos
-- uso del campo de mensaje para el conductor
-- selección de extras (`Manta y pañuelos`, helados)
-- reserva de taxi y verificación de la aparición del modal de búsqueda de auto
-- visualización de detalles del viaje
+Covered scenarios include:
+- Entering origin and destination addresses
+- Mode and vehicle type selection
+- Choosing `Comfort` tariff
+- Phone number entry and SMS verification
+- Adding and validating credit cards
+- Driver message input and validation
+- Selecting extras (blanket & tissues, ice cream)
+- Reserving a taxi and validating the "searching for a car" modal
+- Viewing trip details
 
-También incluye un helper para recuperar el código SMS desde los logs de red del navegador, necesario para las pruebas de confirmación de teléfono.
+The repo also includes a helper to retrieve the SMS code from browser network
+logs, which allows automated verification without external SMS infrastructure.
 
-## Técnicas
+## Test Execution
 
-| Técnica                      | Aplicación en el Proyecto                                                     |
-|:-----------------------------|:------------------------------------------------------------------------------|
-| Page Object Model            | Organización de selectores y acciones de página en `UrbanRoutesPage`          |
-| Pruebas funcionales          | Cobertura de flujos de usuario completos sobre la interfaz de Urban Routes    |
-| Manejo de esperas explícitas | Uso de `WebDriverWait` para sincronizar interacciones con elementos dinámicos |
-
-# 🧪 Ejecución de Pruebas
-
-## Requisitos previos
+### Prerequisites
 
 - Python 3.14+
-- Entorno virtual activo (`.venv`)
-- Dependencias instaladas (`pip install -r requirements.txt`)
-- Navegador Chrome y [ChromeDriver](https://chromedriver.chromium.org/) compatibles con tu versión del navegador
-- Actualizar `urban_routes_url` en el archivo [data.py](data.py) con una nueva url del servidor de Urban.Routes
+- Activate a virtual environment (e.g. `.venv`)
+- Install dependencies: `pip install -r requirements.txt`
+- Chrome browser and a matching ChromeDriver binary
+- Set `urban_routes_url` in `data.py` to point at the test instance of Urban Routes
 
-## Ejecutar las pruebas con Pytest
+### Run the full suite
 
-### Ejecutar las pruebas
 ```bash
-pytest -s tests/test_urban_routes.py::TestUrbanRoutes
+pytest -q
 ```
+
+### Run the Urban Routes tests only
+
+```bash
+pytest -q tests/test_urban_routes.py::TestUrbanRoutes
+```
+
+If you need me to run the tests here (requires ChromeDriver and local browser), tell me and I will execute them and report results.

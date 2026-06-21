@@ -9,7 +9,12 @@ from selenium.webdriver.support.wait import WebDriverWait
 
 
 def retrieve_phone_code(driver) -> str:
-    """Recupera el código SMS desde los logs de performance del navegador."""
+    """Retrieve the SMS verification code from the browser's performance/network logs.
+
+    This helper is intended for end-to-end (E2E) QA tests where the SMS code
+    is exposed via network traffic. It reads Chrome performance logs and
+    extracts digits from the relevant response body.
+    """
     code = None
     for _ in range(10):
         try:
@@ -37,7 +42,8 @@ def retrieve_phone_code(driver) -> str:
 
 
 class UrbanRoutesPage:
-    # Localizadores
+    # Locators for page elements (Page Object Model). Keep selectors here to
+    # isolate UI changes from test logic.
     from_field = (By.ID, "from")
     to_field = (By.ID, "to")
     type_picker_shown_div = (By.CSS_SELECTOR, ".type-picker.shown")
@@ -341,7 +347,7 @@ class UrbanRoutesPage:
         seconds = self._convert_timer_str_to_seconds(
             self._find_element_visibility(self.searching_car_timer).text
         )
-        print(f"⌛ Tiempo de espera para buscar un automóvil: {seconds} segundos.")
+        print(f"⌛ Waiting time for searching a car: {seconds} seconds.")
         return seconds
 
     @staticmethod
