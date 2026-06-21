@@ -52,13 +52,6 @@ El proyecto cubre escenarios como:
 
 También incluye un helper para recuperar el código SMS desde los logs de red del navegador, necesario para las pruebas de confirmación de teléfono.
 
-## Tecnologías
-
-| Tecnología      | Propósito                                  |
-|:----------------|:-------------------------------------------|
-| Python 3.14.5   | Lenguaje de programación principal         |
-| Selenium 4.44.0 | Automatización de pruebas web en navegador |
-
 ## Técnicas
 
 | Técnica                      | Aplicación en el Proyecto                                                     |
